@@ -6,8 +6,8 @@ import DialogContent from "@mui/material/DialogContent";
 import TextField from "@mui/material/TextField";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { useActions } from "../../../hooks/useActions";
 import { IProduct } from "../../../types/types";
+import { useUpdateProductMutation } from "../../../store/api/product.api";
 
 export const UpdateModalUi = ({ product }: { product: IProduct }) => {
   const [open, setOpen] = useState(false);
@@ -21,8 +21,7 @@ export const UpdateModalUi = ({ product }: { product: IProduct }) => {
     price: product.price,
   };
   const [productUpdate, setProductUpdate] = useState(defaultValue);
-
-  const { updateProduct } = useActions();
+  const [updateProduct] = useUpdateProductMutation();
 
   const handleClick = () => {
     setOpen(!open);
@@ -30,8 +29,9 @@ export const UpdateModalUi = ({ product }: { product: IProduct }) => {
 
   const handleAddClick = () => {
     if (product.name !== "" && product.img !== "" && product.price !== "") {
-      updateProduct(productUpdate);
-      setOpen(!open);
+      updateProduct(productUpdate).then(() => {
+        setOpen(!open);
+      });
     }
   };
 

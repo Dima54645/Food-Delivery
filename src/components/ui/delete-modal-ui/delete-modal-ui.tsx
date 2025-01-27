@@ -3,20 +3,21 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useActions } from "../../../hooks/useActions";
 import { IProduct } from "../../../types/types";
+import { useDeleteProductMutation } from "../../../store/api/product.api";
 
 export const DeleteModalUi = ({ product }: { product: IProduct }) => {
   const [open, setOpen] = useState(false);
-  const { deleteProduct } = useActions();
+  const [deleteProduct] = useDeleteProductMutation();
 
   const handleClick = () => {
     setOpen(!open);
   };
 
   const handleDeleteClick = () => {
-    deleteProduct(product);
-    setOpen(!open);
+    deleteProduct(product.id).then(() => {
+      setOpen(!open);
+    });
   };
 
   return (

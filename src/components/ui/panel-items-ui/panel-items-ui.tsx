@@ -8,24 +8,25 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { AddModalUi } from "../add-modal-ui";
 import { useActions } from "../../../hooks/useActions";
-import { useProduct } from "../../../hooks/useProduct";
 import { DeleteModalUi } from "../delete-modal-ui";
 import { UpdateModalUi } from "../update-modal-ui";
+import { useGetProductsQuery } from "../../../store/api/api";
 
 export const PanelItemsUi = ({ itemProduct }: { itemProduct: string }) => {
   const { addBasket } = useActions();
-  const { product } = useProduct();
+  const { data } = useGetProductsQuery(null);
 
   const ProductFilter = useMemo(() => {
-    let result = product;
+    let result = data;
     const filteredByProduct = [];
-    for (let i = 0; i < result.length; i++) {
-      if (result[i].category === itemProduct) {
-        filteredByProduct.push(result[i]);
+    if (result !== undefined)
+      for (let i = 0; i < result?.length; i++) {
+        if (result[i].category === itemProduct) {
+          filteredByProduct.push(result[i]);
+        }
       }
-    }
     return filteredByProduct;
-  }, [itemProduct, product]);
+  }, [itemProduct, data]);
 
   return (
     <Box id={itemProduct} sx={{ mt: 10, mb: 10 }}>

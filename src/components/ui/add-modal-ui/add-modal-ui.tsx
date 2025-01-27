@@ -6,13 +6,12 @@ import DialogContent from "@mui/material/DialogContent";
 import TextField from "@mui/material/TextField";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import { useActions } from "../../../hooks/useActions";
+import { useCreateProductMutation } from "../../../store/api/product.api";
 
 export const AddModalUi = ({ itemProduct }: { itemProduct: string }) => {
   const [open, setOpen] = useState(false);
 
   const defaultValue = {
-    id: Math.floor(Math.random() * (10000 - 1 + 1)) + 1,
     name: "",
     img: "",
     category: itemProduct,
@@ -21,7 +20,7 @@ export const AddModalUi = ({ itemProduct }: { itemProduct: string }) => {
   };
   const [product, setProduct] = useState(defaultValue);
 
-  const { addProduct } = useActions();
+  const [createProduct] = useCreateProductMutation();
 
   const handleClick = () => {
     setOpen(!open);
@@ -29,9 +28,10 @@ export const AddModalUi = ({ itemProduct }: { itemProduct: string }) => {
 
   const handleAddClick = () => {
     if (product.name !== "" && product.img !== "" && product.price !== "") {
-      addProduct(product);
-      setProduct(defaultValue);
-      setOpen(!open);
+      createProduct(product).then(() => {
+        setProduct(defaultValue);
+        setOpen(!open);
+      });
     }
   };
 

@@ -4,16 +4,17 @@ import Container from "@mui/material/Container";
 import { TopMenuUi } from "../ui/top-menu-ui";
 import { PanelItemsUi } from "../ui/panel-items-ui";
 
+const pages: Array<string> = [
+  "Новинки",
+  "Пиццы",
+  "Закуски",
+  "Коктейли",
+  "Кофе",
+  "Напитки",
+  "Десерты",
+];
+
 export const App = () => {
-  const pages: Array<string> = [
-    "Новинки",
-    "Пиццы",
-    "Закуски",
-    "Коктейли",
-    "Кофе",
-    "Напитки",
-    "Десерты",
-  ];
   return (
     <>
       <TopMenuUi pages={pages} />

@@ -4,6 +4,8 @@
 
 In the project directory, you can run:
 
+### `json-server db.json --port 4200 --watch`
+
 ### `npm start`
 
 Runs the app in the development mode.\
